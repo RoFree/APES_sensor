@@ -19,6 +19,7 @@ public:
     VernierLib();
 
     void autoID();//this is the function for the autoID code
+    void ID(int _sensorNumber); 
     // it returns calibration information
     int channel()       { return _channel; };
     float voltageID()   { return _voltageID; }; 

@@ -18,7 +18,7 @@ DCUPWM: allows you to control the voltage to a DC motor connected to the DCU
 #define DEBUG8 // add for Motion Detector
 #define ADC_RES 1024.0
 #define VLEVEL 5.0
-#define SCALE 2.0
+#define SCALE 1.0
 
 //single channel version
 #include "VernierLib.h"
@@ -37,6 +37,9 @@ VernierLib::VernierLib()
   pinMode(11, OUTPUT); //multiplexer on the shield, msb
   pinMode (12, INPUT_PULLUP); //button on DCU 
   pinMode (13, OUTPUT); //LED on shield
+  pinMode(A3, INPUT);
+  pinMode(A0, INPUT);
+  pinMode(A2, INPUT);
  }
  
 void VernierLib::ID(int _sensorNumber)
@@ -204,7 +207,7 @@ void VernierLib::ID(int _sensorNumber)
         break;
       case 17:
         // Carbon Dioxide ;
-        _slope = 1;
+        _slope = 200;
         _intercept = 0;
         break;
       case 18:
@@ -446,7 +449,7 @@ void VernierLib::autoID()
   #endif  //DEBUG1
 
   //Read BTA1 Sensor with resistor ID:
-  _voltageID = analogRead(A5) / ADC_RES * VLEVEL * SCALE; // convert from count to voltage could use Vcc!!!
+  _voltageID = analogRead(A3) / ADC_RES * VLEVEL * SCALE; // convert from count to voltage could use Vcc!!!
   if (_voltageID > 0.86 & _voltageID < 0.95) _sensorNumber = 1; //Thermocouple
   if (_voltageID > 3.72 & _voltageID < 3.86) _sensorNumber = 2; // voltage +/-10 V
   if (_voltageID > 1.92 & _voltageID < 2.13) _sensorNumber = 3; // TI Current Probe (not used)
@@ -553,7 +556,7 @@ void VernierLib::autoID()
         break;
       case 17:
         // Carbon Dioxide ;
-        _slope = 1;
+        _slope = 200;
         _intercept = 0;
         break;
       case 18:
